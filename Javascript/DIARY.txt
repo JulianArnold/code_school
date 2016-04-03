@@ -1,4 +1,11 @@
-20160113 - 20160309:
+20160113
+
+20160402:
+OK, watched video once more and chanced the exercise.  Got most of it but tripped on one line of code: "numSheep *= 4;"
+Reps thus far: 7
+
+20160316:
+Back to some JS
 
 20160309:
 Functions in Eloquent Javascript "Defining a function".

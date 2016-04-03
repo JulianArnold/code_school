@@ -1,12 +1,11 @@
-# Expressions - Reps: 4
+# Expressions - Reps: 5
 
-# unless vs. if
-
+# unless
 if ! tweets.empty?
   puts "Timeline:"
   puts tweets
 end
-
+# this reads better:
 unless tweets.empty?
   puts "Timeline:"
   puts tweets
@@ -17,77 +16,69 @@ unless tweets.empty?
   puts "Timeline:"
   puts tweets
 else
-  puts "No tweets found - better follow some people!"
+  puts 'No tweets were found!  Better follow some people!'
 end
-
+# unless with else is confusing so...
 if tweets.empty?
-  puts "No tweets found - better follow some people!"
+  puts 'No tweets were found!  Better follow some people!'
 else
   puts "Timeline:"
   puts tweets
 end
 
-# nil is false-y
-if attachment.file_path != nil
+# nil is falsey
+if attachment.file_path != nil # just remove the conditional as it will return as true anyway
   attachment.post
 end
-
 if attachment.file_path
   attachment.post
 end
 
-# only nil is false-y
-unless name.length
-  warn "User name required"
-end
-
-# inline conditionals a way to 'de-block' code and put it into 1 line..
+# inline conditionals; instead of this...
 if password.length < 8
   fail "Password too short"
 end
 unless username
   fail "No user name set"
 end
-#.. so it looks like this..
+
+# ...put this...
 fail "Password too short" if password.length < 8
 fail "No user name set" unless username
 
-# short-circuit AND "&&"
+# short circuit and (&&)
 if user
   if user.signed_in?
-    #..
+    #...
   end
 end
-# the short..
+# instead..
 if user && user.signed_in?
   #..
 end
 
-# short circuit assignment (all result in '1' or a boolean true value)
-result = nil || 1
-result = 1 || nil
-result = 1 || 2
+# short circuit assignment
+result = nil || 1 # 1
+result = 1 || nil # 1
+result = 1 || 2 # 1
 
-# default values  - "OR"
+# default values - "OR"
 tweets = timeline.tweets
 tweets = [] unless tweets
-
+# if nil, default to an empty array
 tweets = timeline.tweets || []
 
-# short circuit evaluation
+# short-circuit evaluation
 def sign_in
   current_session || sign_user_in
 end
 
 # conditional assignment
 i_was_set = 1
-i_was_set ||= 2 # only assigns a new value if there's none already present
-
-puts i_was_set
+i_was_set ||= 2
 
 i_was_not_set ||= 2
-
-puts i_was_not_set
+puts i_was_not_set # returns 2 because a nil value preceded the assignment of the '2'
 
 options[:country] = 'us' if options[:country].nil?
 options[:privacy] = true if options[:privacy].nil?
@@ -97,18 +88,29 @@ options[:country] ||= 'us'
 options[:privacy] ||= true
 options[:geotag] ||= true
 
+# conditional return values
 if list_name
   options[:path] = "/#{user_name}/#{list_name}"
 else
   options[:path] = "/#{user_name}"
 end
-
+# assign the value of the if statement
 options[:path] = if list_name
                    "/#{user_name}/#{list_name}"
                  else
                    "/#{user_name}"
                  end
 
+# more on conditional return values
+def list_url(user_name, list_name)
+  if list_name
+    url = "https://twitter.com/#{user_name}/#{list_name}"
+  else
+    url = "https://twitter.com/#{user_name}"
+  end
+  url
+end
+# remove the url variable as the if statement returns a value...
 def list_url(user_name, list_name)
   if list_name
     "https://twitter.com/#{user_name}/#{list_name}"
@@ -117,6 +119,7 @@ def list_url(user_name, list_name)
   end
 end
 
+# case statement value
 client_url = case client_name
                when "web"
                  "http://twitter.com"
@@ -126,8 +129,28 @@ client_url = case client_name
                  nil
              end
 
+# case - ranges
+popularity = case tweet.retweet_count
+               when 0..9
+                 nil
+               when 10..99
+                 "trending"
+               else
+                 "hot"
+             end
+
+# case regexps
 tweet_type = case tweet.status
-               when /\A@\w+/        then  :mention
-               when /\Ad\s+\w+/     then  :direct_message
-               else                       :public
+               when /\A@\w+/
+                 :mention
+               when /\Ad\s+\w+/
+                 :direct_message
+               else
+                 :public
+             end
+# as above with 'whens' and 'thens'
+tweet_type = case tweet.status
+               when /\A@\w+/          then  :mention
+               when /\Ad\s+\w+/       then  :direct_message
+                 else                       :public
              end

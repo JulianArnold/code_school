@@ -1,0 +1,11 @@
+20160319
+
+20160403:
+Continuation of C&Ms in Ruby..
+
+20160402:
+Back to classes and methods in Ruby.  Stopped at 2:45
+
+20160319:
+finished the first rep of the video which has 182 lines of code (including spaces).  Stopped at 1:35 in methods and
+ classes.
